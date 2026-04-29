@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-backdrop"></div>
+  <div class="page-grid"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">SH</span>
+        <span class="logo-text">StudentHub</span>
+      </div>
+      <div class="header-stats" id="headerStats">
+        <span class="stat-badge">Live directory</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Academic operations</div>
+        <h1>Student <span class="gradient-text">Registry</span></h1>
+        <p>Track records, update details, and keep the roster clean without fighting the interface.</p>
+        <div class="hero-tags">
+          <span>Fast search</span>
+          <span>Inline edits</span>
+          <span>Responsive table</span>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <article class="metric-card metric-card-emphasis">
+          <span class="metric-label">Total students</span>
+          <strong class="metric-value" id="totalCount">0</strong>
+          <small>Records in the directory</small>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Visible now</span>
+          <strong class="metric-value" id="visibleCount">0</strong>
+          <small>After search filters</small>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Courses</span>
+          <strong class="metric-value" id="courseCount">0</strong>
+          <small>Unique courses represented</small>
+        </article>
+      </div>
+    </section>
+
+    <section class="control-panel card">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by name, email or course…" />
+        </div>
+        <button class="btn btn-primary" id="openAddModal">
+          <span>＋</span> Add Student
+        </button>
+      </div>
+    </section>
+
+    <!-- Table card -->
+    <div class="card table-card">
+      <div class="table-headline">
+        <div>
+          <h2>Roster</h2>
+          <p>Review, update, or remove students from one place.</p>
+        </div>
+        <span class="table-hint">Tip: use search to narrow the list</span>
+      </div>
+      <div class="table-wrap">
+        <table id="studentTable">
+          <thead>
+            <tr>
+              <th class="col-id">#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Course</th>
+              <th class="col-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr class="empty-row" id="emptyRow">
+              <td colspan="5">
+                <div class="empty-state">
+                  <div class="empty-icon">🎓</div>
+                  <p>No students yet. Add your first one!</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal overlay -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <h2 class="modal-title" id="modalTitle">Add Student</h2>
+
+      <form id="studentForm" novalidate>
+        <input type="hidden" id="studentId" />
+
+        <div class="form-group">
+          <label for="fieldName">Full Name</label>
+          <input type="text" id="fieldName" placeholder="e.g. Alice Johnson" required />
+          <span class="field-error" id="errName"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldEmail">Email Address</label>
+          <input type="email" id="fieldEmail" placeholder="e.g. alice@example.com" required />
+          <span class="field-error" id="errEmail"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldCourse">Course</label>
+          <input type="text" id="fieldCourse" placeholder="e.g. Computer Science" required />
+          <span class="field-error" id="errCourse"></span>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Save Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete confirm dialog -->
+  <div class="modal-overlay" id="deleteOverlay">
+    <div class="modal modal-sm">
+      <div class="delete-icon">🗑️</div>
+      <h2 class="modal-title">Delete Student?</h2>
+      <p class="delete-sub" id="deleteName"></p>
+      <div class="form-actions">
+        <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
+        <button class="btn btn-danger" id="confirmDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
